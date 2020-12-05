@@ -13,7 +13,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 
-<body class="h-screen w-screen leading-normal tracking-normal text-white bg-purple_acai">
+<body class="h-screen leading-normal tracking-normal text-white bg-purple_acai">
   <!--Nav-->
   <nav id="header" class="fixed w-full z-30 top-0 text-white">
 
@@ -43,11 +43,11 @@
         id="nav-content">
         <ul class="list-reset lg:flex flex-1 lg:items-center lg:ml-40 xl:lg:ml-40 2xl:justify-end">
           <li class="mr-3">
-            <a class="inline-block py-2 px-4 text-white font-bold no-underline" href="#">Tecnologias</a>
+            <a class="inline-block py-2 px-4 text-white font-bold no-underline" href="#initial">Tecnologias</a>
           </li>
           <li class="mr-3">
             <a class="inline-block text-white no-underline hover:text-purple-300 hover:text-underline duration-300 py-2 px-4"
-              href="#">Artigos</a>
+              href="#artigos">Artigos</a>
           </li>
           <li class="mr-3">
             <a class="inline-block text-white no-underline hover:text-purple-300 hover:text-underline duration-300 py-2 px-4"
@@ -57,6 +57,87 @@
       </div>
   </nav>
   <%= @inner_content %>
-</body>
 
+   <!-- jQuery if you need it
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  -->
+    <script>
+      var scrollpos = window.scrollY;
+      var header = document.getElementById("header");
+      var navcontent = document.getElementById("nav-content");
+      var navaction = document.getElementById("navAction");
+      var brandname = document.getElementById("brandname");
+      var toToggle = document.querySelectorAll(".toggleColour");
+
+      document.addEventListener("scroll", function () {
+        /*Apply classes for slide in bar*/
+        scrollpos = window.scrollY;
+
+        if (scrollpos > 10) {
+          header.classList.add("bg-purple_acai");
+          navaction.classList.remove("bg-purple_acai");
+          //Use to switch toggleColour colours
+          for (var i = 0; i < toToggle.length; i++) {
+            toToggle[i].classList.add("text-gray-800");
+            toToggle[i].classList.remove("text-white");
+          }
+          header.classList.add("shadow-md");
+          navcontent.classList.remove("bg-gray-100");
+          navcontent.classList.add("bg-white");
+        } else {
+          header.classList.remove("bg-white");
+          navaction.classList.remove("gradient");
+          navaction.classList.add("bg-white");
+          navaction.classList.remove("text-white");
+          navaction.classList.add("text-gray-800");
+          //Use to switch toggleColour colours
+          for (var i = 0; i < toToggle.length; i++) {
+            toToggle[i].classList.add("text-white");
+            toToggle[i].classList.remove("text-gray-800");
+          }
+
+          header.classList.remove("shadow-md");
+          navcontent.classList.remove("bg-white");
+          navcontent.classList.add("bg-gray-100");
+        }
+      });
+    </script>
+    <script>
+      /*Toggle dropdown list*/
+      /*https://gist.github.com/slavapas/593e8e50cf4cc16ac972afcbad4f70c8*/
+
+      var navMenuDiv = document.getElementById("nav-content");
+      var navMenu = document.getElementById("nav-toggle");
+
+      document.onclick = check;
+      function check(e) {
+        var target = (e && e.target) || (event && event.srcElement);
+
+        //Nav Menu
+        if (!checkParent(target, navMenuDiv)) {
+          // click NOT on the menu
+          if (checkParent(target, navMenu)) {
+            // click on the link
+            if (navMenuDiv.classList.contains("hidden")) {
+              navMenuDiv.classList.remove("hidden");
+            } else {
+              navMenuDiv.classList.add("hidden");
+            }
+          } else {
+            // click both outside link and outside menu, hide menu
+            navMenuDiv.classList.add("hidden");
+          }
+        }
+      }
+      function checkParent(t, elm) {
+        while (t.parentNode) {
+          if (t == elm) {
+            return true;
+          }
+          t = t.parentNode;
+        }
+        return false;
+      }
+    </script>
+</body>
 </html>
